@@ -8,13 +8,13 @@ class	ErrorException : public std::exception
 {
 public	:
 	ErrorException(std::string const & str);
+	ErrorException(ErrorException const & errorException);
 	virtual ~ErrorException(void) throw();
 
 	const char *	what(void) const throw();
 
 private	:
 	ErrorException(void);
-//	ErrorException(ErrorException const & errorException);
 	ErrorException &	operator=(ErrorException const & errorException);
 
 	std::string	_str;

@@ -7,11 +7,11 @@ ErrorException::ErrorException(void) : _str("\0")
 ErrorException::ErrorException(std::string const & str) : _str(str)
 {
 }
-/*
+
 ErrorException::ErrorException(ErrorException const & errorException)
 {
 	*this = errorException;
-}*/
+}
 
 ErrorException::~ErrorException(void) throw()
 {
