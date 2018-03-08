@@ -6,7 +6,8 @@ OBJ_PATH = ./objs/
 
 SRC_NAME = main.cpp\
 		FactoryMethod.cpp\
-		ErrorException.cpp
+		ErrorException.cpp\
+		NamespaceAbstractVM.cpp
 
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
 

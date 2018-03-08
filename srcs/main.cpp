@@ -1,19 +1,7 @@
-#include "Operand.hpp"
-#include "FactoryMethod.hpp"
-#include "ErrorException.hpp"
-#include <iostream>
+#include "NamespaceAbstractVM.hpp"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	try
-	{
-		int	i = 5;
-		if (i < 0)
-			throw ErrorException("Nique ta mere");
-	}
-	catch (std::exception const & out)
-	{
-		std::cerr << out.what() << std::endl;
-	}
+	AbstractVM::AbstractVM(argc, argv);
 	return (0);
 }

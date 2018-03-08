@@ -179,7 +179,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt8 += _value;
+				valueInt8 = _value - valueInt8;
 				ss << valueInt8;
 				return (factoryMethod.createOperand(Int8, ss.str()));
 			}
@@ -194,7 +194,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt16 += _value;
+				valueInt16 = _value - valueInt16;
 				ss << valueInt16;
 				return (factoryMethod.createOperand(Int16, ss.str()));
 			}
@@ -209,7 +209,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt32 += _value;
+				valueInt32 = _value - valueInt32;
 				ss << valueInt32;
 				return (factoryMethod.createOperand(Int32, ss.str()));
 			}
@@ -224,7 +224,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueFloat += _value;
+				valueFloat = _value - valueFloat;
 				ss << valueFloat;
 				return (factoryMethod.createOperand(Float, ss.str()));
 			}
@@ -239,7 +239,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueDouble += _value;
+				valueDouble = _value - valueDouble;
 				ss << valueDouble;
 				return (factoryMethod.createOperand(Double, ss.str()));
 			}
@@ -262,7 +262,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt8 += _value;
+				valueInt8 *= _value;
 				ss << valueInt8;
 				return (factoryMethod.createOperand(Int8, ss.str()));
 			}
@@ -277,7 +277,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt16 += _value;
+				valueInt16 *= _value;
 				ss << valueInt16;
 				return (factoryMethod.createOperand(Int16, ss.str()));
 			}
@@ -292,7 +292,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueInt32 += _value;
+				valueInt32 *= _value;
 				ss << valueInt32;
 				return (factoryMethod.createOperand(Int32, ss.str()));
 			}
@@ -307,7 +307,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueFloat += _value;
+				valueFloat *= _value;
 				ss << valueFloat;
 				return (factoryMethod.createOperand(Float, ss.str()));
 			}
@@ -322,7 +322,7 @@ public	:
 				throw ErrorException("Error: Underflow");
 			else
 			{
-				valueDouble += _value;
+				valueDouble *= _value;
 				ss << valueDouble;
 				return (factoryMethod.createOperand(Double, ss.str()));
 			}
@@ -349,7 +349,7 @@ public	:
 					throw ErrorException("Error: Underflow");
 				else
 				{
-					valueInt8 += _value;
+					valueInt8 = _value / valueInt8;
 					ss << valueInt8;
 					return (factoryMethod.createOperand(Int8, ss.str()));
 				}
@@ -369,7 +369,7 @@ public	:
 					throw ErrorException("Error: Underflow");
 				else
 				{
-					valueInt16 += _value;
+					valueInt16 = _value / valueInt16;
 					ss << valueInt16;
 					return (factoryMethod.createOperand(Int8, ss.str()));
 				}
@@ -389,7 +389,7 @@ public	:
 					throw ErrorException("Error: Underflow");
 				else
 				{
-					valueInt32 += _value;
+					valueInt32 = _value / valueInt32;
 					ss << valueInt32;
 					return (factoryMethod.createOperand(Int8, ss.str()));
 				}
@@ -409,7 +409,7 @@ public	:
 					throw ErrorException("Error: Underflow");
 				else
 				{
-					valueFloat += _value;
+					valueFloat = _value / valueFloat;
 					ss << valueFloat;
 					return (factoryMethod.createOperand(Float, ss.str()));
 				}
@@ -429,7 +429,7 @@ public	:
 					throw ErrorException("Error: Underflow");
 				else
 				{
-					valueDouble += _value;
+					valueDouble = _value / valueDouble;
 					ss << valueDouble;
 					return (factoryMethod.createOperand(Double, ss.str()));
 				}
