@@ -40,6 +40,7 @@ void	AbstractVM::withoutFile(void)
 		std::cerr << error.what() << std::endl;
 		std::exit(EXIT_SUCCESS);
 	}
+	parser(lst);
 }
 
 void	AbstractVM::parser(std::list<std::string> & lst)
@@ -70,68 +71,50 @@ int	AbstractVM::push(std::list<std::string> & lst, std::list<IOperand const *> &
 
 	if (!str.compare(0, 5, "push "))
 	{
-		str += 5;
+		str.erase(0, 5);
 		if (!str.compare(0, 5, "int8("))
 		{
 			int	i = 0;
 
-			if (str.at(0) == '-' || str.at(0) == '+')
-			{
-				str = str + 1;
+			str.erase(0, 5);
+			if (str[i] == '-' || str[i] == '+')
 				i++;
-			}
-			while (std::isdigit(str.at(0)))
-			{
-				str = str + 1;
+			while (std::isdigit(str[i]))
 				i++;
-			}
-			if (str.at(0) != ')' || i == 0 || (str.at(1) != '\n' && str.at(1) != '\0'))
+			if (str[i] != ')' || i == 0 || (str[i + 1] != '\n' && str[i + 1] != '\0'))
 				return (0);
-			str = str - i;
 			instructions.push_front(factoryMethod.createOperand(Int8, str.substr(0, i)));
-			str = str + i + 2;
+			lst.pop_front();
 			return (1);
 		}
 		else if (!str.compare(0, 6, "int16("))
 		{
 			int	i = 0;
 
-			if (str.at(0) == '-' || str.at(0) == '+')
-			{
-				str++;
+			str.erase(0, 6);
+			if (str[i] == '-' || str[i] == '+')
 				i++;
-			}
-			while (std::isdigit(str.at(0)))
-			{
-				str++;
+			while (std::isdigit(str[i]))
 				i++;
-			}
-			if (str.at(0) != ')' || i == 0 || (str.at(1) != '\n' && str.at(1) != '\0'))
+			if (str[i] != ')' || i == 0 || (str[i + 1] != '\n' && str[i + 1] != '\0'))
 				return (0);
-			str -= i;
 			instructions.push_front(factoryMethod.createOperand(Int16, str.substr(0, i)));
-			str += i + 2;
+			lst.pop_front();
 			return (1);
 		}
 		else if (!str.compare(0, 6, "int32("))
 		{
 			int	i = 0;
 
-			if (str.at(0) == '-' || str.at(0) == '+')
-			{
-				str++;
+			str.erase(0, 6);
+			if (str[i] == '-' || str[i] == '+')
 				i++;
-			}
-			while (std::isdigit(str.at(0)))
-			{
-				str++;
+			while (std::isdigit(str[i]))
 				i++;
-			}
-			if (str.at(0) != ')' || i == 0 || (str.at(1) != '\n' && str.at(1) != '\0'))
+			if (str[i] != ')' || i == 0 || (str[i + 1] != '\n' && str[i + 1] != '\0'))
 				return (0);
-			str -= i;
 			instructions.push_front(factoryMethod.createOperand(Int32, str.substr(0, i)));
-			str += i + 2;
+			lst.pop_front();
 			return (1);
 		}
 		else if (!str.compare(0, 6, "float("))
@@ -139,23 +122,19 @@ int	AbstractVM::push(std::list<std::string> & lst, std::list<IOperand const *> &
 			int	i = 0;
 			int	point = 0;
 
-			if (str.at(0) == '-' || str.at(0) == '+')
-			{
-				str++;
+			str.erase(0, 6);
+			if (str[i] == '-' || str[i] == '+')
 				i++;
-			}
-			whlie (std::isdigit(str.at(0)) && str.at(0) == '.')
+			while (std::isdigit(str[i]) && str[i] == '.')
 			{
-				if (str.at(0) == '.')
+				if (str[i] == '.')
 					point++;
-				str++;
 				i++;
 			}
-			if (str.at(0) != ')' || i == 0 || point > 1 || (str.at(1) != '\n' && str.at(1) != '\0'))
+			if (str[i] != ')' || i == 0 || point > 1 || (str[i + 1] != '\n' && str[i + 1] != '\0'))
 				return (0);
-			str -= i;
 			instructions.push_front(factoryMethod.createOperand(Float, str.substr(0, i)));
-			str += i + 2;
+			lst.pop_front();
 			return (1);
 		}
 		else if (!str.compare(0, 7, "double("))
@@ -163,23 +142,19 @@ int	AbstractVM::push(std::list<std::string> & lst, std::list<IOperand const *> &
 			int	i = 0;
 			int	point = 0;
 
-			if (str.at(0) == '-' || str.at(0) == '+')
-			{
-				str++;
+			str.erase(0, 6);
+			if (str[i] == '-' || str[i] == '+')
 				i++;
-			}
-			while (std::isdigit(str.at(0)) && str.at(0) == '.')
+			while (std::isdigit(str[i]) && str[i] == '.')
 			{
-				if (str.at(0) == '.')
+				if (str[i] == '.')
 					point++;
-				str++;
 				i++;
 			}
-			if (str.at(0) != ')' || i == 0 || point > 1 || (str.at(1) != '\n' && str.at(1) != '\0'))
+			if (str[i] != ')' || i == 0 || point > 1 || (str[i + 1] != '\n' && str[i + 1] != '\0'))
 				return (0);
-			str -= i;
 			instructions.push_front(factoryMethod.createOperand(Double, str.substr(0, i)));
-			str += i + 2;
+			lst.pop_front();
 			return (1);
 		}
 		else
