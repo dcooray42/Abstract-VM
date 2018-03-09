@@ -15,7 +15,11 @@ namespace	AbstractVM
 	void	withoutFile(void);
 	void	withFile(char *argv);
 	void	parser(std::list<std::string> & lst);
-	int	push(std::list<std::string> & lst, std::list<IOperand const *> & instructions);
-	int	pop(std::string const & str, std::list<IOperand *> & lst);
+	int	push_assert(std::string str, std::list<IOperand const *> & instructions);
+	int	push(std::string str, std::list<IOperand const *> & instructions);
+	int	pop(std::string str, std::list<IOperand const *> & instructions);
+	int	dump(std::string str, std::list<IOperand const *> & instructions);
+	int	assert(std::string str, std::list<IOperand const *> & instructions);
+	void	flush(std::list<IOperand const *> & instructions);
 };
 #endif

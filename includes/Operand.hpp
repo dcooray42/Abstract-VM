@@ -24,12 +24,14 @@ public	:
 		std::stringstream	ss;
 
 		_value = number;
-		ss << number;
-		_str = ss.str();
 		if (type == Int8)
 		{
+			int	i = _value;
+			ss << i;
+			_str = ss.str();
 			_precision = static_cast<int>(sizeof(int8_t));
 			_type = Int8;
+			return ;
 		}
 		else if (type == Int16)
 		{
@@ -51,6 +53,8 @@ public	:
 			_precision = static_cast<int>(sizeof(double));
 			_type = Double;
 		}
+		ss << number;
+		_str = ss.str();
 	}
 
 	Operand(Operand const & operand)
@@ -137,7 +141,7 @@ public	:
 
 			if (_value + valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value + valueFloat < FLT_MIN)
+			else if (_value + valueFloat < -FLT_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -152,7 +156,7 @@ public	:
 
 			if (_value + valueDouble > DBL_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value + valueDouble < DBL_MIN)
+			else if (_value + valueDouble < -DBL_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -220,7 +224,7 @@ public	:
 
 			if (_value - valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value - valueFloat < FLT_MIN)
+			else if (_value - valueFloat < -FLT_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -235,7 +239,7 @@ public	:
 
 			if (_value - valueDouble > DBL_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value - valueDouble < DBL_MIN)
+			else if (_value - valueDouble < -DBL_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -303,7 +307,7 @@ public	:
 
 			if (_value * valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value * valueFloat < FLT_MIN)
+			else if (_value * valueFloat < -FLT_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -318,7 +322,7 @@ public	:
 
 			if (_value * valueDouble > DBL_MAX)
 				throw ErrorException("Error: Overflow");
-			else if (_value * valueDouble < DBL_MIN)
+			else if (_value * valueDouble < -DBL_MAX)
 				throw ErrorException("Error: Underflow");
 			else
 			{
@@ -405,7 +409,7 @@ public	:
 			{
 				if (_value / valueFloat > FLT_MAX)
 					throw ErrorException("Error: Overflow");
-				else if (_value / valueFloat < FLT_MIN)
+				else if (_value / valueFloat < -FLT_MAX)
 					throw ErrorException("Error: Underflow");
 				else
 				{
@@ -425,7 +429,7 @@ public	:
 			{
 				if (_value / valueDouble > DBL_MAX)
 					throw ErrorException("Error: Overflow");
-				else if (_value / valueDouble < DBL_MIN)
+				else if (_value / valueDouble < -DBL_MAX)
 					throw ErrorException("Error: Underflow");
 				else
 				{

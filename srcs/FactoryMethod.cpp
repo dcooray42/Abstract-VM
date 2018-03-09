@@ -70,7 +70,7 @@ IOperand const *	FactoryMethod::createFloat(std::string const & value) const
 
 	if (valueFloat > FLT_MAX)
 		throw ErrorException("Error: Overflow");
-	else if (valueFloat < FLT_MIN)
+	else if (valueFloat < -FLT_MAX)
 		throw ErrorException("Error: Underflow");
 	else
 	{
@@ -85,7 +85,7 @@ IOperand const *	FactoryMethod::createDouble(std::string const & value) const
 
 	if (valueDouble > DBL_MAX)
 		throw ErrorException("Error: Overflow");
-	else if (valueDouble < DBL_MIN)
+	else if (valueDouble < -DBL_MAX)
 		throw ErrorException("Error: Underflow");
 	else
 	{
