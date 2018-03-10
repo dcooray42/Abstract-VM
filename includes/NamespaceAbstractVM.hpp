@@ -8,12 +8,13 @@
 # include <fstream>
 # include <iostream>
 # include <cctype>
+# include <cerrno>
 
 namespace	AbstractVM
 {
 	void	AbstractVM(int argc, char **argv);
 	void	withoutFile(void);
-	void	withFile(char *argv);
+	void	withFile(char **argv);
 	void	parser(std::list<std::string> & lst);
 	int	push_assert(std::string str, std::list<IOperand const *> & instructions);
 	int	push(std::string str, std::list<IOperand const *> & instructions);

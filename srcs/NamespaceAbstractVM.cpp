@@ -4,11 +4,10 @@ void	AbstractVM::AbstractVM(int argc, char **argv)
 {
 	try
 	{
-		(void)argv;
 		if (argc == 1)
 			AbstractVM::withoutFile();
-//		else if (argc == 2)
-//			AbstractVM::withFile(argv[1]);
+		else if (argc == 2)
+			AbstractVM::withFile(argv);
 		else
 			throw ErrorException("Error: Too many files");
 	}
@@ -21,7 +20,7 @@ void	AbstractVM::AbstractVM(int argc, char **argv)
 
 void	AbstractVM::withoutFile(void)
 {
-	std::list<std::string> lst;
+	std::list<std::string>	lst;
 	std::list<std::string>::iterator	ite;
 	std::string	str;
 	int	exitValue = 0;
@@ -44,6 +43,61 @@ void	AbstractVM::withoutFile(void)
 	{
 		std::cerr << error.what() << std::endl;
 		std::exit(EXIT_SUCCESS);
+	}
+	parser(lst);
+}
+
+void	AbstractVM::withFile(char **argv)
+{
+	std::ifstream	ifs;
+	std::list<std::string>	lst;
+	std::list<std::string>::iterator	ite;
+	std::string	str;
+	std::stringstream	ss;
+	int	exitValue = 0;
+
+	errno = 0;
+	ifs.open(argv[1]);
+	if (!errno)
+	{
+		while (std::getline(ifs, str))
+		{
+			lst.push_back(str);
+			if (!str.compare("exit"))
+				exitValue++;
+			if (!str.compare(";;"))
+				break ;
+		}
+		try
+		{
+			ifs.close();
+			if (errno == EISDIR)
+			{
+				ss << argv[0] << ": " << argv[1] << ": " << std::strerror(errno);
+				throw ErrorException(ss.str().c_str());
+			}
+			ite = --lst.end();
+			if (exitValue != 1 || (*ite).compare("exit"))
+				throw ErrorException("Error: Syntax");
+		}
+		catch (std::exception const & error)
+		{
+			std::cerr << error.what() << std::endl;
+			std::exit(EXIT_SUCCESS);
+		}
+	}
+	else
+	{
+		try
+		{
+			ss << argv[0] << ": " << argv[1] << ": " << std::strerror(errno);
+			throw ErrorException(ss.str().c_str());
+		}
+		catch (std::exception const & error)
+		{
+			std::cerr << error.what() << std::endl;
+			std::exit(EXIT_SUCCESS);
+		}
 	}
 	parser(lst);
 }
