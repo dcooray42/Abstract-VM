@@ -64,6 +64,9 @@ void	AbstractVM::parser(std::list<std::string> & lst)
 			status |= assert(str, instructions);
 			status |= add(str, instructions);
 			status |= sub(str, instructions);
+			status |= mul(str, instructions);
+			status |= div(str, instructions);
+			status |= mod(str, instructions);
 			status |= (!str.compare(";;") ? 1 : 0);
 			if (!status)
 				throw ErrorException("Error: Syntax");

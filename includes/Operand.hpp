@@ -86,11 +86,11 @@ public	:
 
 	virtual IOperand const * operator+( IOperand const & rhs ) const
 	{
-		int		type = (getPrecision() > rhs.getPrecision()) ? getPrecision() : rhs.getPrecision();
+		eOperandType	type = (getType() > rhs.getType()) ? getType() : rhs.getType();
 		FactoryMethod	factoryMethod;
 		std::stringstream	ss;
 
-		if (type == static_cast<int>(sizeof(int8_t)))
+		if (type == Int8)
 		{
 			int	valueInt8 = std::atoi(rhs.toString().c_str());
 
@@ -105,7 +105,7 @@ public	:
 				return (factoryMethod.createOperand(Int8, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int16_t)))
+		else if (type == Int16)
 		{
 			int	valueInt16 = std::atoi(rhs.toString().c_str());
 
@@ -120,7 +120,7 @@ public	:
 				return (factoryMethod.createOperand(Int16, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int32_t)))
+		else if (type == Int32)
 		{
 			long	valueInt32 = std::atol(rhs.toString().c_str());
 
@@ -135,7 +135,7 @@ public	:
 				return (factoryMethod.createOperand(Int32, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(float)))
+		else if (type == Float)
 		{
 			double	valueFloat = std::atof(rhs.toString().c_str());
 
@@ -169,11 +169,11 @@ public	:
 
 	virtual IOperand const * operator-( IOperand const & rhs ) const
 	{
-		int		type = (getPrecision() > rhs.getPrecision()) ? getPrecision() : rhs.getPrecision();
+		eOperandType	type = (getType() > rhs.getType()) ? getType() : rhs.getType();
 		FactoryMethod	factoryMethod;
 		std::stringstream	ss;
 
-		if (type == static_cast<int>(sizeof(int8_t)))
+		if (type == Int8)
 		{
 			int	valueInt8 = std::atoi(rhs.toString().c_str());
 
@@ -188,7 +188,7 @@ public	:
 				return (factoryMethod.createOperand(Int8, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int16_t)))
+		else if (type == Int16)
 		{
 			int	valueInt16 = std::atoi(rhs.toString().c_str());
 
@@ -203,7 +203,7 @@ public	:
 				return (factoryMethod.createOperand(Int16, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int32_t)))
+		else if (type == Int32)
 		{
 			long	valueInt32 = std::atol(rhs.toString().c_str());
 
@@ -218,7 +218,7 @@ public	:
 				return (factoryMethod.createOperand(Int32, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(float)))
+		else if (type == Float)
 		{
 			double	valueFloat = std::atof(rhs.toString().c_str());
 
@@ -252,11 +252,11 @@ public	:
 
 	virtual IOperand const * operator*( IOperand const & rhs ) const
 	{
-		int		type = (getPrecision() > rhs.getPrecision()) ? getPrecision() : rhs.getPrecision();
+		eOperandType	type = (getType() > rhs.getType()) ? getType() : rhs.getType();
 		FactoryMethod	factoryMethod;
 		std::stringstream	ss;
 
-		if (type == static_cast<int>(sizeof(int8_t)))
+		if (type == Int8)
 		{
 			int	valueInt8 = std::atoi(rhs.toString().c_str());
 
@@ -271,7 +271,7 @@ public	:
 				return (factoryMethod.createOperand(Int8, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int16_t)))
+		else if (type == Int16)
 		{
 			int	valueInt16 = std::atoi(rhs.toString().c_str());
 
@@ -286,7 +286,7 @@ public	:
 				return (factoryMethod.createOperand(Int16, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(int32_t)))
+		else if (type == Int32)
 		{
 			long	valueInt32 = std::atol(rhs.toString().c_str());
 
@@ -301,7 +301,7 @@ public	:
 				return (factoryMethod.createOperand(Int32, ss.str()));
 			}
 		}
-		else if (type == static_cast<int>(sizeof(float)))
+		else if (type == Float)
 		{
 			double	valueFloat = std::atof(rhs.toString().c_str());
 
@@ -335,11 +335,11 @@ public	:
 
 	virtual IOperand const * operator/( IOperand const & rhs ) const
 	{
-		int		type = (getPrecision() > rhs.getPrecision()) ? getPrecision() : rhs.getPrecision();
+		eOperandType	type = (getType() > rhs.getType()) ? getType() : rhs.getType();
 		FactoryMethod	factoryMethod;
 		std::stringstream	ss;
 
-		if (type == static_cast<int>(sizeof(int8_t)))
+		if (type == Int8)
 		{
 			int	valueInt8 = std::atoi(rhs.toString().c_str());
 
@@ -359,7 +359,7 @@ public	:
 				}
 			}
 		}
-		if (type == static_cast<int>(sizeof(int16_t)))
+		if (type == Int16)
 		{
 			int	valueInt16 = std::atoi(rhs.toString().c_str());
 
@@ -379,7 +379,7 @@ public	:
 				}
 			}
 		}
-		if (type == static_cast<int>(sizeof(int32_t)))
+		if (type == Int32)
 		{
 			long	valueInt32 = std::atol(rhs.toString().c_str());
 
@@ -399,7 +399,7 @@ public	:
 				}
 			}
 		}
-		else if (type == static_cast<int>(sizeof(float)))
+		else if (type == Float)
 		{
 			double	valueFloat = std::atof(rhs.toString().c_str());
 
@@ -443,15 +443,15 @@ public	:
 
 	virtual IOperand const * operator%( IOperand const & rhs ) const
 	{
-		int		type = (getPrecision() > rhs.getPrecision()) ? getPrecision() : rhs.getPrecision();
+		eOperandType	type = (getType() > rhs.getType()) ? getType() : rhs.getType();
 		FactoryMethod	factoryMethod;
 		std::stringstream	ss;
 
-		if (type == static_cast<int>(sizeof(float)) || type == static_cast<int>(sizeof(double)))
+		if (type == Float || type == Double)
 			throw ErrorException("Error: Invalid operands to binary %");
 		else
 		{
-			if (type == static_cast<int>(sizeof(int8_t)))
+			if (type == Int8)
 			{
 				int	valueInt8 = std::atoi(rhs.toString().c_str());
 
@@ -464,7 +464,7 @@ public	:
 					return (factoryMethod.createOperand(Int8, ss.str()));
 				}
 			}
-			else if (type == static_cast<int>(sizeof(int16_t)))
+			else if (type == Int16)
 			{
 				int	valueInt16 = std::atoi(rhs.toString().c_str());
 
