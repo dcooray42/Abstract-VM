@@ -62,6 +62,8 @@ void	AbstractVM::parser(std::list<std::string> & lst)
 			status |= pop(str, instructions);
 			status |= dump(str, instructions);
 			status |= assert(str, instructions);
+			status |= add(str, instructions);
+			status |= sub(str, instructions);
 			status |= (!str.compare(";;") ? 1 : 0);
 			if (!status)
 				throw ErrorException("Error: Syntax");
@@ -214,11 +216,11 @@ int	AbstractVM::assert(std::string str, std::list<IOperand const *> & instructio
 	IOperand const	*v1;
 	IOperand const	*v2;
 
-	if (instructions.size() < 1)
-		throw ErrorException("Error: Empty");
 	v1 = instructions.front();
 	if (!str.compare(0, 7, "assert "))
 	{
+		if (instructions.size() < 1)
+			throw ErrorException("Error: Empty");
 		str.erase(0, 7);
 		if (push_assert(str, tmp))
 		{
@@ -229,6 +231,121 @@ int	AbstractVM::assert(std::string str, std::list<IOperand const *> & instructio
 			delete v2;
 			return (1);
 		}
+	}
+	return (0);
+}
+
+int	AbstractVM::add(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*v1;
+	IOperand const	*v2;
+	IOperand const	*rslt;
+
+	if (!str.compare("add"))
+	{
+		if (instructions.size() < 2)
+			throw ErrorException("Error: Add: Stack less than 2 values");
+		v2 = instructions.front();
+		instructions.pop_front();
+		v1 = instructions.front();
+		instructions.pop_front();
+		rslt = *v1 + *v2;
+		delete v1;
+		delete v2;
+		instructions.push_front(rslt);
+		return (1);
+	}
+	return (0);
+}
+
+int	AbstractVM::sub(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*v1;
+	IOperand const	*v2;
+	IOperand const	*rslt;
+
+	if (!str.compare("sub"))
+	{
+		if (instructions.size() < 2)
+			throw ErrorException("Error: Sub: Stack less than 2 values");
+		v2 = instructions.front();
+		instructions.pop_front();
+		v1 = instructions.front();
+		instructions.pop_front();
+		rslt = *v1 - *v2;
+		delete v1;
+		delete v2;
+		instructions.push_front(rslt);
+		return (1);
+	}
+	return (0);
+}
+
+int	AbstractVM::mul(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*v1;
+	IOperand const	*v2;
+	IOperand const	*rslt;
+
+	if (!str.compare("mul"))
+	{
+		if (instructions.size() < 2)
+			throw ErrorException("Error: Mul: Stack less than 2 values");
+		v2 = instructions.front();
+		instructions.pop_front();
+		v1 = instructions.front();
+		instructions.pop_front();
+		rslt = *v1 * *v2;
+		delete v1;
+		delete v2;
+		instructions.push_front(rslt);
+		return (1);
+	}
+	return (0);
+}
+
+int	AbstractVM::div(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*v1;
+	IOperand const	*v2;
+	IOperand const	*rslt;
+
+	if (!str.compare("div"))
+	{
+		if (instructions.size() < 2)
+			throw ErrorException("Error: Div: Stack less than 2 values");
+		v2 = instructions.front();
+		instructions.pop_front();
+		v1 = instructions.front();
+		instructions.pop_front();
+		rslt = *v1 / *v2;
+		delete v1;
+		delete v2;
+		instructions.push_front(rslt);
+		return (1);
+	}
+	return (0);
+}
+
+int	AbstractVM::mod(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*v1;
+	IOperand const	*v2;
+	IOperand const	*rslt;
+
+	if (!str.compare("mod"))
+	{
+		if (instructions.size() < 2)
+			throw ErrorException("Error: Mod: Stack less than 2 values");
+		v2 = instructions.front();
+		instructions.pop_front();
+		v1 = instructions.front();
+		instructions.pop_front();
+		rslt = *v1 % *v2;
+		delete v1;
+		delete v2;
+		instructions.push_front(rslt);
+		return (1);
 	}
 	return (0);
 }

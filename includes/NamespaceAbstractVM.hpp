@@ -20,6 +20,11 @@ namespace	AbstractVM
 	int	pop(std::string str, std::list<IOperand const *> & instructions);
 	int	dump(std::string str, std::list<IOperand const *> & instructions);
 	int	assert(std::string str, std::list<IOperand const *> & instructions);
+	int	add(std::string str, std::list<IOperand const *> & instructions);
+	int	sub(std::string str, std::list<IOperand const *> & instructions);
+	int	mul(std::string str, std::list<IOperand const *> & instructions);
+	int	div(std::string str, std::list<IOperand const *> & instructions);
+	int	mod(std::string str, std::list<IOperand const *> & instructions);
 	void	flush(std::list<IOperand const *> & instructions);
 };
 #endif
