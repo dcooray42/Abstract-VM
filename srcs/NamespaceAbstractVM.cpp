@@ -22,17 +22,22 @@ void	AbstractVM::AbstractVM(int argc, char **argv)
 void	AbstractVM::withoutFile(void)
 {
 	std::list<std::string> lst;
+	std::list<std::string>::iterator	ite;
 	std::string	str;
+	int	exitValue = 0;
 
 	while (std::getline(std::cin, str))
 	{
 		lst.push_back(str);
+		if (!str.compare("exit"))
+			exitValue++;
 		if (!str.compare(";;"))
 			break ;
 	}
 	try
 	{
-		if (str.compare(";;"))
+		ite = --lst.end();
+		if (str.compare(";;") || exitValue != 1 || (*--ite).compare("exit"))
 			throw ErrorException("Error: Syntax");
 	}
 	catch (std::exception const & error)
@@ -67,7 +72,10 @@ void	AbstractVM::parser(std::list<std::string> & lst)
 			status |= mul(str, instructions);
 			status |= div(str, instructions);
 			status |= mod(str, instructions);
-			status |= (!str.compare(";;") ? 1 : 0);
+			status |= print(str, instructions);
+			status |= (!str.compare(0, 2, "; ") ? 1 : 0);
+			if (!str.compare("exit"))
+				 break;
 			if (!status)
 				throw ErrorException("Error: Syntax");
 		}
@@ -188,7 +196,7 @@ int	AbstractVM::pop(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare("pop"))
 	{
 		if (instructions.size() < 2)
-			throw ErrorException("Error: Empty");
+			throw ErrorException("Error: Pop: Empty stack");
 		instructions.pop_front();
 		return (1);
 	}
@@ -223,7 +231,7 @@ int	AbstractVM::assert(std::string str, std::list<IOperand const *> & instructio
 	if (!str.compare(0, 7, "assert "))
 	{
 		if (instructions.size() < 1)
-			throw ErrorException("Error: Empty");
+			throw ErrorException("Error: Assert: Empty stack");
 		str.erase(0, 7);
 		if (push_assert(str, tmp))
 		{
@@ -270,7 +278,7 @@ int	AbstractVM::sub(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare("sub"))
 	{
 		if (instructions.size() < 2)
-			throw ErrorException("Error: Sub: Stack less than 2 values");
+			throw ErrorException("Error: Sub: Stack contains less than 2 values");
 		v2 = instructions.front();
 		instructions.pop_front();
 		v1 = instructions.front();
@@ -293,7 +301,7 @@ int	AbstractVM::mul(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare("mul"))
 	{
 		if (instructions.size() < 2)
-			throw ErrorException("Error: Mul: Stack less than 2 values");
+			throw ErrorException("Error: Mul: Stack constains less than 2 values");
 		v2 = instructions.front();
 		instructions.pop_front();
 		v1 = instructions.front();
@@ -316,7 +324,7 @@ int	AbstractVM::div(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare("div"))
 	{
 		if (instructions.size() < 2)
-			throw ErrorException("Error: Div: Stack less than 2 values");
+			throw ErrorException("Error: Div: Stack constains less than 2 values");
 		v2 = instructions.front();
 		instructions.pop_front();
 		v1 = instructions.front();
@@ -339,7 +347,7 @@ int	AbstractVM::mod(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare("mod"))
 	{
 		if (instructions.size() < 2)
-			throw ErrorException("Error: Mod: Stack less than 2 values");
+			throw ErrorException("Error: Mod: Stack contains less than 2 values");
 		v2 = instructions.front();
 		instructions.pop_front();
 		v1 = instructions.front();
@@ -348,6 +356,27 @@ int	AbstractVM::mod(std::string str, std::list<IOperand const *> & instructions)
 		delete v1;
 		delete v2;
 		instructions.push_front(rslt);
+		return (1);
+	}
+	return (0);
+}
+
+int	AbstractVM::print(std::string str, std::list<IOperand const *> & instructions)
+{
+	IOperand const	*operand;
+	int8_t		value;
+
+	if (!str.compare("print"))
+	{
+		if (instructions.size() < 1)
+			throw ErrorException("Error: Print: Empty stack");
+		operand = instructions.front();
+		if (operand->getType() != Int8)
+			throw ErrorException("Error: Print: Value different from Int8");
+		value = static_cast<int8_t>(std::atoi(operand->toString().c_str()));
+		if (value < 32 || value > 126)
+			throw ErrorException("Error: Print: Value non printable");
+		std::cout << value << std::endl;
 		return (1);
 	}
 	return (0);
