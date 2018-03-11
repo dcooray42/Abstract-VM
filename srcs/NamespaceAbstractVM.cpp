@@ -28,7 +28,7 @@ void	AbstractVM::withoutFile(void)
 	while (std::getline(std::cin, str))
 	{
 		lst.push_back(str);
-		if (!str.compare("exit"))
+		if (!str.compare(0, 4, "exit"))
 			exitValue++;
 		if (!str.compare(";;"))
 			break ;
@@ -36,7 +36,8 @@ void	AbstractVM::withoutFile(void)
 	try
 	{
 		ite = --lst.end();
-		if (str.compare(";;") || exitValue != 1 || (*--ite).compare("exit"))
+		if (str.compare(";;") || exitValue != 1 || (*--ite).compare(0, 4, "exit") ||
+			((*ite)[4] != '\n' && (*ite)[4] != '\0' && ((*ite).compare(4, 2, " ;") || str[6] == ';')))
 			throw ErrorException("Error: Syntax");
 	}
 	catch (std::exception const & error)
@@ -63,10 +64,8 @@ void	AbstractVM::withFile(char **argv)
 		while (std::getline(ifs, str))
 		{
 			lst.push_back(str);
-			if (!str.compare("exit"))
+			if (!str.compare(0, 4, "exit"))
 				exitValue++;
-			if (!str.compare(";;"))
-				break ;
 		}
 		try
 		{
@@ -77,7 +76,8 @@ void	AbstractVM::withFile(char **argv)
 				throw ErrorException(ss.str().c_str());
 			}
 			ite = --lst.end();
-			if (exitValue != 1 || (*ite).compare("exit"))
+			if (exitValue != 1 || (*ite).compare(0, 4, "exit") ||
+				((*ite)[4] != '\n' && (*ite)[4] != '\0' && ((*ite).compare(4, 2, " ;") || str[6] == ';')))
 				throw ErrorException("Error: Syntax");
 		}
 		catch (std::exception const & error)
@@ -128,7 +128,7 @@ void	AbstractVM::parser(std::list<std::string> & lst)
 			status |= mod(str, instructions);
 			status |= print(str, instructions);
 			status |= (!str.compare(0, 1, ";") && str[1] != ';' ? 1 : 0);
-			if (!str.compare("exit"))
+			if (!str.compare(0, 4, "exit"))
 				 break;
 			if (!status)
 				throw ErrorException("Error: Syntax");
@@ -161,7 +161,7 @@ int	AbstractVM::push_assert(std::string str, std::list<IOperand const *> & instr
 			return (0);
 		instructions.push_front(factoryMethod.createOperand(Int8, str.substr(0, i)));
 		str.erase(0, i + 1);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		return (1);
 	}
@@ -178,7 +178,7 @@ int	AbstractVM::push_assert(std::string str, std::list<IOperand const *> & instr
 			return (0);
 		instructions.push_front(factoryMethod.createOperand(Int16, str.substr(0, i)));
 		str.erase(0, i + 1);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		return (1);
 	}
@@ -195,7 +195,7 @@ int	AbstractVM::push_assert(std::string str, std::list<IOperand const *> & instr
 			return (0);
 		instructions.push_front(factoryMethod.createOperand(Int32, str.substr(0, i)));
 		str.erase(0, i + 1);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		return (1);
 	}
@@ -217,7 +217,7 @@ int	AbstractVM::push_assert(std::string str, std::list<IOperand const *> & instr
 			return (0);
 		instructions.push_front(factoryMethod.createOperand(Float, str.substr(0, i)));
 		str.erase(0, i + 1);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		return (1);
 	}
@@ -239,7 +239,7 @@ int	AbstractVM::push_assert(std::string str, std::list<IOperand const *> & instr
 			return (0);
 		instructions.push_front(factoryMethod.createOperand(Double, str.substr(0, i)));
 		str.erase(0, i + 1);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		return (1);
 	}
@@ -266,7 +266,7 @@ int	AbstractVM::pop(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "pop"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 1)
 			throw ErrorException("Error: Pop: Empty stack");
@@ -285,7 +285,7 @@ int	AbstractVM::dump(std::string str, std::list<IOperand const *> & instructions
 	if (!str.compare(0, 4, "dump"))
 	{
 		str.erase(0, 4);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		for (it = instructions.begin(); it != ite; it++)
 		{
@@ -331,7 +331,7 @@ int	AbstractVM::add(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "add"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 2)
 			throw ErrorException("Error: Add: Stack less than 2 values");
@@ -357,7 +357,7 @@ int	AbstractVM::sub(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "sub"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 2)
 			throw ErrorException("Error: Sub: Stack contains less than 2 values");
@@ -383,7 +383,7 @@ int	AbstractVM::mul(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "mul"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 2)
 			throw ErrorException("Error: Mul: Stack constains less than 2 values");
@@ -409,7 +409,7 @@ int	AbstractVM::div(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "div"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 2)
 			throw ErrorException("Error: Div: Stack constains less than 2 values");
@@ -435,7 +435,7 @@ int	AbstractVM::mod(std::string str, std::list<IOperand const *> & instructions)
 	if (!str.compare(0, 3, "mod"))
 	{
 		str.erase(0, 3);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 2)
 			throw ErrorException("Error: Mod: Stack contains less than 2 values");
@@ -460,7 +460,7 @@ int	AbstractVM::print(std::string str, std::list<IOperand const *> & instruction
 	if (!str.compare(0, 5, "print"))
 	{
 		str.erase(0, 5);
-		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[3] == ';'))
+		if (str[0] != '\n' && str[0] != '\0' && (str.compare(0, 2, " ;") || str[2] == ';'))
 			return (0);
 		if (instructions.size() < 1)
 			throw ErrorException("Error: Print: Empty stack");
