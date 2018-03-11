@@ -24,34 +24,15 @@ public	:
 		std::stringstream	ss;
 
 		_value = number;
+		_type = type;
+		_precision = precision[type];
 		if (type == Int8)
 		{
 			int	i = _value;
+
 			ss << i;
 			_str = ss.str();
-			_precision = static_cast<int>(sizeof(int8_t));
-			_type = Int8;
 			return ;
-		}
-		else if (type == Int16)
-		{
-			_precision = static_cast<int>(sizeof(int16_t));
-			_type = Int16;
-		}
-		else if (type == Int32)
-		{
-			_precision = static_cast<int>(sizeof(int32_t));
-			_type = Int32;
-		}
-		else if (type == Float)
-		{
-			_precision = static_cast<int>(sizeof(float));
-			_type = Float;
-		}
-		else
-		{
-			_precision = static_cast<int>(sizeof(double));
-			_type = Double;
 		}
 		ss << number;
 		_str = ss.str();

@@ -14,6 +14,15 @@ enum	eOperandType
 	Double
 };
 
+static int	precision[] =
+{
+	sizeof(int8_t),
+	sizeof(int16_t),
+	sizeof(int32_t),
+	sizeof(float),
+	sizeof(double)
+};
+
 class	IOperand
 {
 public	:
