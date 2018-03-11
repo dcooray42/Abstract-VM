@@ -92,7 +92,7 @@ public	:
 
 		if (type == Int8)
 		{
-			int	valueInt8 = std::atoi(rhs.toString().c_str());
+			long long	valueInt8 = std::atoll(rhs.toString().c_str());
 
 			if (_value + valueInt8 > 127)
 				throw ErrorException("Error: Overflow");
@@ -107,7 +107,7 @@ public	:
 		}
 		else if (type == Int16)
 		{
-			int	valueInt16 = std::atoi(rhs.toString().c_str());
+			long long	valueInt16 = std::atoll(rhs.toString().c_str());
 
 			if (_value + valueInt16 > 32767)
 				throw ErrorException("Error: Overflow");
@@ -122,7 +122,7 @@ public	:
 		}
 		else if (type == Int32)
 		{
-			long	valueInt32 = std::atol(rhs.toString().c_str());
+			long long	valueInt32 = std::atoll(rhs.toString().c_str());
 
 			if (_value + valueInt32 > 2147483647)
 				throw ErrorException("Error: Overflow");
@@ -137,7 +137,7 @@ public	:
 		}
 		else if (type == Float)
 		{
-			double	valueFloat = std::atof(rhs.toString().c_str());
+			long double	valueFloat = std::strtold(rhs.toString().c_str(), NULL);
 
 			if (_value + valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
@@ -175,7 +175,7 @@ public	:
 
 		if (type == Int8)
 		{
-			int	valueInt8 = std::atoi(rhs.toString().c_str());
+			long long	valueInt8 = std::atoll(rhs.toString().c_str());
 
 			if (_value - valueInt8 > 127)
 				throw ErrorException("Error: Overflow");
@@ -190,7 +190,7 @@ public	:
 		}
 		else if (type == Int16)
 		{
-			int	valueInt16 = std::atoi(rhs.toString().c_str());
+			long long	valueInt16 = std::atoll(rhs.toString().c_str());
 
 			if (_value - valueInt16 > 32767)
 				throw ErrorException("Error: Overflow");
@@ -205,7 +205,7 @@ public	:
 		}
 		else if (type == Int32)
 		{
-			long	valueInt32 = std::atol(rhs.toString().c_str());
+			long long	valueInt32 = std::atoll(rhs.toString().c_str());
 
 			if (_value - valueInt32 > 2147483647)
 				throw ErrorException("Error: Overflow");
@@ -220,7 +220,7 @@ public	:
 		}
 		else if (type == Float)
 		{
-			double	valueFloat = std::atof(rhs.toString().c_str());
+			long double	valueFloat = std::strtold(rhs.toString().c_str(), NULL);
 
 			if (_value - valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
@@ -258,7 +258,7 @@ public	:
 
 		if (type == Int8)
 		{
-			int	valueInt8 = std::atoi(rhs.toString().c_str());
+			long long	valueInt8 = std::atoll(rhs.toString().c_str());
 
 			if (_value * valueInt8 > 127)
 				throw ErrorException("Error: Overflow");
@@ -273,7 +273,7 @@ public	:
 		}
 		else if (type == Int16)
 		{
-			int	valueInt16 = std::atoi(rhs.toString().c_str());
+			long long	valueInt16 = std::atoll(rhs.toString().c_str());
 
 			if (_value * valueInt16 > 32767)
 				throw ErrorException("Error: Overflow");
@@ -288,7 +288,7 @@ public	:
 		}
 		else if (type == Int32)
 		{
-			long	valueInt32 = std::atol(rhs.toString().c_str());
+			long long	valueInt32 = std::atoll(rhs.toString().c_str());
 
 			if (_value * valueInt32 > 2147483647)
 				throw ErrorException("Error: Overflow");
@@ -303,7 +303,7 @@ public	:
 		}
 		else if (type == Float)
 		{
-			double	valueFloat = std::atof(rhs.toString().c_str());
+			long double	valueFloat = std::strtold(rhs.toString().c_str(), NULL);
 
 			if (_value * valueFloat > FLT_MAX)
 				throw ErrorException("Error: Overflow");
@@ -341,7 +341,7 @@ public	:
 
 		if (type == Int8)
 		{
-			int	valueInt8 = std::atoi(rhs.toString().c_str());
+			long long	valueInt8 = std::atoll(rhs.toString().c_str());
 
 			if (!valueInt8)
 				throw ErrorException("Error: Division by zero");
@@ -361,7 +361,7 @@ public	:
 		}
 		if (type == Int16)
 		{
-			int	valueInt16 = std::atoi(rhs.toString().c_str());
+			long long	valueInt16 = std::atoll(rhs.toString().c_str());
 
 			if (!valueInt16)
 				throw ErrorException("Error: Division by zero");
@@ -381,7 +381,7 @@ public	:
 		}
 		if (type == Int32)
 		{
-			long	valueInt32 = std::atol(rhs.toString().c_str());
+			long long	valueInt32 = std::atoll(rhs.toString().c_str());
 
 			if (!valueInt32)
 				throw ErrorException("Error: Division by zero");
@@ -401,7 +401,7 @@ public	:
 		}
 		else if (type == Float)
 		{
-			double	valueFloat = std::atof(rhs.toString().c_str());
+			long double	valueFloat = std::strtold(rhs.toString().c_str(), NULL);
 
 			if (!valueFloat)
 				throw ErrorException("Error: Division by zero");
@@ -453,7 +453,7 @@ public	:
 		{
 			if (type == Int8)
 			{
-				int	valueInt8 = std::atoi(rhs.toString().c_str());
+				long long	valueInt8 = std::atoll(rhs.toString().c_str());
 
 				if (!valueInt8)
 					throw ErrorException("Error: Modulo by zero");
@@ -466,7 +466,7 @@ public	:
 			}
 			else if (type == Int16)
 			{
-				int	valueInt16 = std::atoi(rhs.toString().c_str());
+				long long	valueInt16 = std::atoll(rhs.toString().c_str());
 
 				if (!valueInt16)
 					throw ErrorException("Error: Modulo by zero");
@@ -479,7 +479,7 @@ public	:
 			}
 			else
 			{
-				long	valueInt32 = std::atol(rhs.toString().c_str());
+				long long	valueInt32 = std::atoll(rhs.toString().c_str());
 
 				if (!valueInt32)
 					throw ErrorException("Error: Modulo by zero");

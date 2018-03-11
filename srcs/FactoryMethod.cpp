@@ -21,7 +21,7 @@ IOperand const *	FactoryMethod::createOperand(eOperandType type, std::string con
 
 IOperand const *	FactoryMethod::createInt8(std::string const & value) const
 {
-	int	valueInt8 = std::atoi(value.c_str());
+	long long	valueInt8 = std::atoll(value.c_str());
 
 	if (valueInt8 > 127)
 		throw ErrorException("Error: Overflow");
@@ -36,7 +36,7 @@ IOperand const *	FactoryMethod::createInt8(std::string const & value) const
 
 IOperand const *	FactoryMethod::createInt16(std::string const & value) const
 {
-	int	valueInt16 = std::atoi(value.c_str());
+	long long	valueInt16 = std::atoll(value.c_str());
 
 	if (valueInt16 > 32767)
 		throw ErrorException("Error: Overflow");
@@ -51,7 +51,7 @@ IOperand const *	FactoryMethod::createInt16(std::string const & value) const
 
 IOperand const *	FactoryMethod::createInt32(std::string const & value) const
 {
-	long	valueInt32 = std::atol(value.c_str());
+	long long	valueInt32 = std::atoll(value.c_str());
 
 	if (valueInt32 > 2147483647)
 		throw ErrorException("Error: Overflow");
@@ -66,7 +66,7 @@ IOperand const *	FactoryMethod::createInt32(std::string const & value) const
 
 IOperand const *	FactoryMethod::createFloat(std::string const & value) const
 {
-	double	valueFloat = std::atof(value.c_str());
+	long double	valueFloat = std::strtold(value.c_str(), NULL);
 
 	if (valueFloat > FLT_MAX)
 		throw ErrorException("Error: Overflow");
